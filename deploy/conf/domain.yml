@@ -1,0 +1,13 @@
+default: &default
+  domain: <%= ENV['CANVAS_DOMAIN'] %>
+  ssl: true
+
+development:
+  <<: *default
+
+production:
+  <<: *default
+
+
+test:
+  <<: *default
