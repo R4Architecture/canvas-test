@@ -57,7 +57,7 @@ if [ $VAR_AVAIL = 1 ]; then
             cp ../certs/$DOMAIN.crt ../certs/$HOST.crt
          fi
       fi
-   f1
+   fi
 
    echo 'stop full service'
    docker-compose down
