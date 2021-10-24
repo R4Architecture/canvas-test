@@ -102,6 +102,30 @@ function full_build(){
     echo 'now start full service'
     docker-compose up -d
 
+    echo 'creating certificate based on wildcard created in LTI-SSL helper repository'
+
+    if [[ ! -d ../certs ]]
+    then
+        echo "We need a ../certs folder to exist for this script run the LTI SSL helper repo and copy the results into ../certs"
+        exit 1
+    else
+        if [[ ! -f ../certs/$DOMAIN.key ]]
+        then
+            echo "We need the wildcard key and certificate available in the ../certs folder"
+            exit 1
+        else
+            if [[ ! -f ../certs/$HOST.key ]]
+            then
+                echo "private wildcard key doesn not exist. Let's create it for now"
+                cp ../certs/$DOMAIN.key ../certs/$HOST.key
+            fi
+            if [[ ! -f ../certs/$HOST.crt ]]
+            then
+                echo  "private wildcard certificate doesn not exist. Let's create it for now"
+                cp ../certs/$DOMAIN.crt ../certs/$HOST.crt
+            fi
+        fi
+    fi
     
     echo 'adding local CA as certificate authotiry for testing... first wait for container to come up'
     sleep 10
